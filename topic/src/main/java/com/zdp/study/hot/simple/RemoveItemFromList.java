@@ -88,7 +88,10 @@ public class RemoveItemFromList {
     private static String join(int[] nums){
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < nums.length;i++){
-            builder.append(nums[i]).append(",");
+            builder.append(nums[i]);
+            if (i < nums.length -1){
+                builder.append(",");
+            }
         }
 
         return builder.toString();
