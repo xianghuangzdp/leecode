@@ -1,4 +1,4 @@
-package com.zdp.study.hot.simple;
+package com.zdp.study.hot.medium;
 
 import java.util.HashMap;
 import java.util.Map;
