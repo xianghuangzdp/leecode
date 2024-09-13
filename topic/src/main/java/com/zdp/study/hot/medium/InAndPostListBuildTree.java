@@ -9,11 +9,10 @@ import java.util.Objects;
 
 /**
  * @author zdp
- * @date 2024/9/11 01:52
- * @desc 105. 从前序与中序遍历序列构造二叉树
- * 给定两个整数数组 preorder 和 inorder ，其中 preorder 是二叉树的先序遍历， inorder 是同一棵树的中序遍历，请构造二叉树并返回其根节点。
+ * @date 2024/9/13 23:54
+ * @desc 106.从中序遍历和后续遍历序列中构造二叉树
  */
-public class BuildTree {
+public class InAndPostListBuildTree {
 
     public static void main(String[] args) {
         System.out.println(case1()?"case1 success":"case1 fail");
@@ -24,10 +23,10 @@ public class BuildTree {
     }
 
     public static boolean case1(){
-        int [] preOrder = new int[]{3,9,20,15,7};
+        int [] postOrder = new int[]{9,15,7,20,3};
         int [] inOrder = new int[]{9,3,15,20,7};
 
-        TreeNode result = buildTree(preOrder,inOrder);
+        TreeNode result = buildTree(inOrder,postOrder);
 
         return true;
     }
@@ -68,7 +67,7 @@ public class BuildTree {
         return true;
     }
 
-    private static boolean checkResult(ListNode node,int[] target){
+    private static boolean checkResult(ListNode node, int[] target){
         for (int i = 0; i < target.length;i++){
             if (node == null || !Objects.equals(target[i],node.val)){
                 return false;
@@ -80,37 +79,36 @@ public class BuildTree {
         return node == null;
     }
 
-    public static TreeNode buildTree(int[] preorder, int[] inorder) {
+    public static TreeNode buildTree(int[] inorder, int[] postorder) {
         Map<Integer,Integer> inOrderMap = new HashMap<>();
 
         for (int  i = 0; i < inorder.length;i++){
             inOrderMap.put(inorder[i],i);
         }
 
-        TreeNode result = buildTree(preorder,inOrderMap,0,inorder.length-1,0);
+        TreeNode result = buildTree(postorder,inOrderMap,0,postorder.length-1,postorder.length-1);
         return result;
     }
 
-    public static TreeNode buildTree(int[] preorder,
-                                  Map<Integer,Integer> inOrderMap,int preOrderStart,int preOrderEnd
-            ,int inOrderStart){
+    public static TreeNode buildTree(int[] postOrder,
+                                     Map<Integer,Integer> inOrderMap,int inOrderStart,int inOrderEnd
+            ,int postOrderEnd){
 
-        if (preOrderStart > preOrderEnd){
+        if (inOrderStart > inOrderEnd){
             return null;
         }
 
-        int root = preorder[preOrderStart];
+        int root = postOrder[postOrderEnd];
         int rootIndexInOrder = inOrderMap.get(root);
-        int leftTreeSize = rootIndexInOrder - inOrderStart;
+        int rightTreeSize = inOrderEnd - rootIndexInOrder;
 
         TreeNode result = new TreeNode(root);
-        result.left = buildTree(preorder,inOrderMap
-                ,preOrderStart+1,preOrderStart + leftTreeSize,inOrderStart);
+        result.right = buildTree(postOrder,inOrderMap
+                ,rootIndexInOrder+1,inOrderEnd,postOrderEnd-1);
 
-        result.right = buildTree(preorder,inOrderMap
-                ,preOrderStart + leftTreeSize+1,preOrderEnd,rootIndexInOrder+1);
+        result.left = buildTree(postOrder,inOrderMap
+                ,inOrderStart,rootIndexInOrder-1,postOrderEnd-rightTreeSize-1);
 
         return result;
     }
-
 }
