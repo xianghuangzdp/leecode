@@ -11,6 +11,7 @@ import java.util.List;
 public class Node {
 
     public int val;
+    public String strValue;
     public List<Node> neighbors;
     public Node() {
         val = 0;
@@ -18,6 +19,11 @@ public class Node {
     }
     public Node(int _val) {
         val = _val;
+        neighbors = new ArrayList<Node>();
+    }
+
+    public Node(String strValue) {
+        this.strValue = strValue;
         neighbors = new ArrayList<Node>();
     }
     public Node(int _val, ArrayList<Node> _neighbors) {

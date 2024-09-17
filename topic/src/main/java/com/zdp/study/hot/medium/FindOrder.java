@@ -17,8 +17,8 @@ import java.util.*;
 public class FindOrder {
 
     public static void main(String[] args) {
-//        System.out.println(case1()?"case1 success":"case1 fail");
-        System.out.println(case2()?"case2 success":"case2 fail");
+        System.out.println(case1()?"case1 success":"case1 fail");
+//        System.out.println(case2()?"case2 success":"case2 fail");
 //        System.out.println(case3()?"case3 success":"case3 fail");
     }
 
